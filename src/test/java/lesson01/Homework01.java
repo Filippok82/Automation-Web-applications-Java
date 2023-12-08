@@ -2,7 +2,6 @@ package lesson01;
 
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -16,7 +15,6 @@ import java.io.IOException;
 import java.time.Duration;
 import java.io.*;
 
-import static org.apache.commons.io.FileUtils.copyFile;
 
 
 /*Написать успешный тест на том же стенде - https://test-stand.gb.ru/login
@@ -37,14 +35,13 @@ public class Homework01 {
 
     final String USERNAME = "Student-5";
     final String PASSWORD = "97d2434151";
-    String generatedString;
-    static WebDriver driver;
-    static WebDriverWait wait;
-    File screenshot;
+    private static WebDriver driver;
+    private static WebDriverWait wait;
+
 
     @BeforeAll
     static void creation() {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\IrinaFil\\IdeaProjects\\Automation-Web-applications-Java\\src\\main\\resources\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "src\\main\\resources\\chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.get("https://test-stand.gb.ru/login");
@@ -52,7 +49,8 @@ public class Homework01 {
 
     }
 
-    public void authorization() {
+
+    void authorization() {
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement userName = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("form#login input[type='text']")));
         WebElement password = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("form#login input[type='password']")));
@@ -70,32 +68,25 @@ public class Homework01 {
         Assertions.assertEquals(String.format("Hello, %s", USERNAME), actualUserName);
     }
 
-    public String generateGroupName() {
-        generatedString = RandomStringUtils.randomAlphanumeric(10);
-
-        return generatedString;
-    }
 
     @Test
-    void testHomework01() throws InterruptedException {
+    void testTitleGroup() {
         authorization();
-
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement buttonPlus = driver.findElement(By.cssSelector("#create-btn"));
         buttonPlus.click();
+        String nameGroupText = "New name group" + System.currentTimeMillis();
+        WebElement nameGroupField = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".mdc-text-field .mdc-text-field__input")));
+        nameGroupField.sendKeys(nameGroupText);
 
-        WebElement nameGroup = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".mdc-text-field .mdc-text-field__input")));
-        nameGroup.sendKeys(generateGroupName());
+        WebElement buttonSaveGroup = driver.findElement(By.cssSelector("#update-item > div.submit > button"));
+        buttonSaveGroup.click();
 
-        WebElement buttonSave = driver.findElement(By.cssSelector("#update-item > div.submit > button"));
-        buttonSave.click();
-
-        Thread.sleep(5000);
-        WebElement titleText = driver.findElement(By.cssSelector("#app > main > div > div > div.mdc-data-table > div.mdc-data-table__table-container > table > tbody > tr:nth-child(1) > td:nth-child(2)"));
-        Assertions.assertEquals(generatedString, titleText.getText());
+        String tableTitleXpath = "//table[@aria-label='Tutors list']//tbody/tr/td[text()='%s']";
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(String.format(tableTitleXpath, nameGroupText))));
 
 
-        screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         try {
             FileUtils.copyFile(screenshot, new File("src/main/resources/screen01.png"));
         } catch (IOException e) {
