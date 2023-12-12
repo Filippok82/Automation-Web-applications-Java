@@ -1,0 +1,65 @@
+package homework02;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.FluentWait;
+
+
+import java.time.Duration;
+
+public class TableRow {
+
+    WebElement webElement;
+
+    public TableRow(WebElement webElement) {
+        this.webElement = webElement;
+    }
+
+    public String getTitle() {
+        return webElement.findElement(By.xpath("./td[2]")).getText();
+    }
+
+    public String getStatusGroup(){
+        return webElement.findElement(By.xpath("./td[3]")).getText();
+    }
+
+    public void clickDelete(String text) {
+        String buttonText = String.format("./td/button[text()='%s']",text);
+        webElement.findElement(By.xpath(buttonText)).click();
+    }
+    public void waitRestore(String text){
+        String buttonText = String.format("./td/button[text()='%s']",text);
+        FluentWait<WebElement> fluentWait = new FluentWait<>(webElement);
+        fluentWait
+                .withTimeout(Duration.ofSeconds(10))
+                .pollingEvery(Duration.ofSeconds(1))
+                .ignoring(NoSuchElementException.class)
+                .until(x -> x.findElement(By.xpath(buttonText)));
+
+    }
+
+    public String getName() {
+        return webElement.findElement(By.xpath("./td[2]")).getText();
+    }
+
+    public String getStatus() {
+        return webElement.findElement(By.xpath("./td[4]")).getText();
+    }
+
+    public void clickDeleteStudent(String text) {
+        String buttonText = String.format("./td/button[text()='%s']",text);
+        webElement.findElement(By.xpath(buttonText)).click();
+    }
+    public void waitRestoreStudent(String text){
+        String buttonText = String.format("./td/button[text()='%s']",text);
+        FluentWait<WebElement> fluentWait = new FluentWait<>(webElement);
+        fluentWait
+                .withTimeout(Duration.ofSeconds(10))
+                .pollingEvery(Duration.ofSeconds(1))
+                .ignoring(NoSuchElementException.class)
+                .until(x -> x.findElement(By.xpath(buttonText)));
+
+    }
+
+}
