@@ -27,6 +27,7 @@ public class MainPage {
     private final SelenideElement buttonCloseModalAddStudent = $x("//h2[@id='generateStudentsForm-title']/../button");
     private final SelenideElement iconOpenTableStudent = $x("//table[@aria-label='Tutors list']/tbody/tr[1]/td[4]/button[3]");
     private final ElementsCollection rowsInStudentTable = $$x("//table[@aria-label='User list']/tbody/tr");
+
     private final SelenideElement profileButton = $x("//nav//li[contains(@class,'mdc-menu-surface--anchor')]//span[text()='Profile']");
 
 
@@ -64,12 +65,10 @@ public class MainPage {
 
     public void successDeleteGroup(String nameGroupText) {
         getRow(nameGroupText).clickDelete("delete");
-        getRow(nameGroupText).waitRestore("restore_from_trash");
     }
 
     public void successRestoreGroup(String nameGroupText) {
-        getRow(nameGroupText).clickDelete("restore_from_trash");
-        getRow(nameGroupText).waitRestore("delete");
+        getRow(nameGroupText).waitRestore("restore_from_trash");
     }
 
     public void addingNumbersStudent(String count) {
@@ -116,12 +115,12 @@ public class MainPage {
 
     public void successDeleteStudent(String name) {
         getRowStudent(name).clickDeleteStudent("delete");
-        getRowStudent(name).waitRestoreStudent("restore_from_trash");
+
     }
 
-    public void successRestoreStudent(String nameGroupText) {
-        getRowStudent(nameGroupText).clickDeleteStudent("restore_from_trash");
-        getRowStudent(nameGroupText).waitRestoreStudent("delete");
+    public void successRestoreStudent(String name) {
+        getRowStudent(name).waitRestoreStudent("restore_from_trash");
+
     }
 
     public void clickProfileButton() {
