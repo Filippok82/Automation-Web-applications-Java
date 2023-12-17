@@ -1,6 +1,7 @@
 package homework03;
 
 
+import com.codeborne.selenide.Screenshots;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import homework03.pages.LoginPage;
@@ -25,7 +26,7 @@ public class TestStandGB {
     private static final String userName = "Student-5";
     private static final String password = "97d2434151";
     private static final String FULLNAME = "5 Student";
-    private static WebDriver driver;
+
 
 
 
@@ -33,7 +34,6 @@ public class TestStandGB {
     void open() {
 
         Selenide.open("https://test-stand.gb.ru/login");
-        driver = WebDriverRunner.getWebDriver();
 
     }
 
@@ -70,12 +70,8 @@ public class TestStandGB {
         Assertions.assertEquals("active", mainPage.getStatusRow(nameGroupText));
 
 
-        File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        try {
-            FileUtils.copyFile(screenshot, new File("src/main/resources/screen01.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Selenide.screenshot("src/main/resources/screen02.png");
+
     }
 
 

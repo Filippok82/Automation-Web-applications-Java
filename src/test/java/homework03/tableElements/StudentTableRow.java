@@ -15,7 +15,7 @@ public class StudentTableRow {
 
 
     public String getStatus() {
-        return root.$x("./td[4]").getText();
+        return root.$x("./td[4]").should(visible).getText();
     }
 
     public void clickDeleteStudent(String text) {
@@ -32,7 +32,7 @@ public class StudentTableRow {
     }
 
     public String getName() {
-        return root.$x("./td[2]").getText();
+        return root.$x("./td[2]").should(visible).getText();
     }
 
 }

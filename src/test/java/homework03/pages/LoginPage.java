@@ -37,7 +37,7 @@ public class LoginPage {
     }
 
     public void checkButtonInvisible() {
-        loginButton.shouldBe(Condition.visible);
+        loginButton.shouldNot(Condition.visible);
     }
 
     public String getTextError() {

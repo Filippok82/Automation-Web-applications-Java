@@ -41,6 +41,7 @@ public class MainPage {
         nameGroupField.should(Condition.value(nameGroupText));
         buttonSaveGroup.should(Condition.visible).click();
         buttonCloseModalWindow.should(Condition.visible).click();
+
     }
 
     public void successCreatingNewGroup(String nameGroupText) {
