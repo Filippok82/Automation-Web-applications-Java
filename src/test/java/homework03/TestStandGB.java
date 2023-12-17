@@ -7,16 +7,7 @@ import com.codeborne.selenide.WebDriverRunner;
 import homework03.pages.LoginPage;
 import homework03.pages.MainPage;
 import homework03.pages.ProfilePage;
-import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
-
-
-
-import java.io.File;
-import java.io.IOException;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -70,7 +61,6 @@ public class TestStandGB {
         Assertions.assertEquals("active", mainPage.getStatusRow(nameGroupText));
 
 
-        Selenide.screenshot("src/main/resources/screen02.png");
 
     }
 
