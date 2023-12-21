@@ -9,8 +9,7 @@ import java.time.Duration;
 
 public class TestTextError {
 
-    private String userName = "Student-5";
-    private String password = "97d2434151";
+
     private static WebDriver driver;
     private static WebDriverWait wait;
 
